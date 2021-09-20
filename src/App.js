@@ -1,36 +1,20 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 import "./App.css";
+import OnePostView from "./pages/OnePostView";
+import Posts from "./pages/posts";
 
 function App() {
-  const [posts, setPosts] = useState([]);
-
-  useEffect(() => {
-    axios.get("https://jsonplaceholder.typicode.com/posts").then((response) => {
-      setPosts(response.data);
-    });
-  }, []);
-
   return (
-    <div>
-      {posts.map((post) => {
-        return (
-          <div
-            key={post.id}
-            style={{
-              border: "1px solid black",
-              margin: 3,
-              padding: "3px 10px",
-            }}
-          >
-            <h2>
-              <b>{post.id})</b> {post.title}
-            </h2>
-            <p>{post.body}</p>
-          </div>
-        );
-      })}
-    </div>
+    <BrowserRouter>
+      <Switch>
+        <Route exact path="/">
+          <Posts />
+        </Route>
+        <Route path="/post/:id">
+          <OnePostView />
+        </Route>
+      </Switch>
+    </BrowserRouter>
   );
 }
 
